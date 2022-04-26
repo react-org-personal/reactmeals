@@ -34,6 +34,7 @@ const Cart = (props) => {
     );
     setIsSubmitting(false);
     setDidSubmitted(true);
+    cartCtx.clearCart();
   };
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
