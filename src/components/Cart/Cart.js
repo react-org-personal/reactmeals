@@ -18,6 +18,16 @@ const Cart = (props) => {
     cartCtx.addItem({ ...item, amount: 1 });
   };
 
+  const submitOrderHandler = (userData) => {
+    fetch('https://react-meals-98125-default-rtdb.firebaseio.com/orders.json', {
+      method: 'POST',
+      body: JSON.stringify({
+        users: userData,
+        orderedItems : cartCtx.items
+      })
+    });
+  };
+
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const cartItems = (
     <ul className={classes["cart-items"]}>
@@ -57,7 +67,7 @@ const Cart = (props) => {
         <span>Total amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <Checkout onCancel={props.onCloseCart}/>}
+      {isCheckout && <Checkout onConfirm={submitOrderHandler} onCancel={props.onCloseCart}/>}
       {!isCheckout && orderActions}
     </Modal>
   );
